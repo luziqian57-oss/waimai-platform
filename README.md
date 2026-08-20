@@ -12,6 +12,12 @@
 - Spring Security + JWT
 - Maven + Git
 
+## 开发工具
+
+- IntelliJ IDEA：Java 后端开发
+- Postman：RESTful 接口调试
+- Navicat Premium Lite：MySQL 数据库管理
+
 ## 本地启动
 
 MySQL 和 Redis 启动后，在 IntelliJ IDEA 中打开本目录，选择 Java 21，运行
