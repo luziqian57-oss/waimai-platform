@@ -1,0 +1,23 @@
+<view class="profile-page">
+  <view class="profile-glow"></view>
+  <view class="page content">
+    <view class="page-heading"><view class="eyebrow">PROFILE</view><view class="title">我的</view></view>
+    <view class="profile-card glass">
+      <view class="avatar">{{user ? user.initial : '星'}}</view>
+      <view class="identity" wx:if="{{loggedIn && user}}"><view class="name">{{user.nickname}}</view><view class="subtitle">@{{user.username}} · {{user.role === 'ADMIN' ? '管理员' : '普通用户'}}</view></view>
+      <view class="identity" wx:else><view class="name">欢迎来到星河外卖</view><view class="subtitle">登录后管理订单与收货地址</view></view>
+      <button wx:if="{{!loggedIn}}" class="primary login" bindtap="goLogin">登录 / 注册</button>
+    </view>
+    <view class="section-label">服务</view>
+    <view class="card menu-card">
+      <view class="menu-row" bindtap="goOrders"><view class="menu-icon orange">◷</view><view class="menu-text"><view>我的订单</view><text>查看配送进度与历史订单</text></view><view class="chevron">›</view></view>
+      <view class="menu-row" bindtap="goAddresses"><view class="menu-icon blue">⌖</view><view class="menu-text"><view>收货地址</view><text>管理常用配送地址</text></view><view class="chevron">›</view></view>
+    </view>
+    <view class="section-label">应用</view>
+    <view class="card menu-card">
+      <view class="menu-row"><view class="menu-icon green">✓</view><view class="menu-text"><view>服务状态</view><text>{{apiHost}}</text></view><view class="online">正常</view></view>
+      <view class="menu-row"><view class="menu-icon purple">i</view><view class="menu-text"><view>关于星河外卖</view><text>版本 1.0.0</text></view><view class="chevron">›</view></view>
+    </view>
+    <button wx:if="{{loggedIn}}" class="logout" bindtap="logout">退出登录</button>
+  </view>
+</view>

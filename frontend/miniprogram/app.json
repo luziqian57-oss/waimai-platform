@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/cart/cart",
+    "pages/orders/orders",
+    "pages/profile/profile",
+    "pages/login/login",
+    "pages/addresses/addresses"
+  ],
+  "window": {
+    "navigationBarTitleText": "星河外卖",
+    "navigationBarBackgroundColor": "#f7f8fb",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f8fb",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8a8f99",
+    "selectedColor": "#ff6b35",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {"pagePath": "pages/home/home", "text": "点餐"},
+      {"pagePath": "pages/cart/cart", "text": "购物车"},
+      {"pagePath": "pages/orders/orders", "text": "订单"},
+      {"pagePath": "pages/profile/profile", "text": "我的"}
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

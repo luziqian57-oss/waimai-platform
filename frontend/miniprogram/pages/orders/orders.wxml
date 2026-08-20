@@ -1,0 +1,22 @@
+<view class="page orders-page">
+  <view class="page-heading"><view class="eyebrow">ORDER HISTORY</view><view class="title">我的订单</view></view>
+  <view wx:if="{{!loggedIn}}" class="empty"><view class="empty-icon">◷</view><view>登录后查看订单</view><button class="primary login-button" bindtap="goLogin">去登录</button></view>
+  <view wx:elif="{{!loading && !orders.length}}" class="empty"><view class="empty-icon">✓</view><view>暂无订单</view></view>
+  <view wx:for="{{orders}}" wx:key="orderNo" class="card order-card">
+    <view class="between order-head">
+      <view><view class="shop">{{item.shopName}}</view><view class="order-no">{{item.orderNo}}</view></view>
+      <view class="status status-{{item.orderStatus}}">{{item.statusText}}</view>
+    </view>
+    <view class="goods-wrap">
+      <view wx:for="{{item.items}}" wx:key="id" wx:for-item="goods" class="goods between">
+        <view class="goods-main"><text class="goods-name">{{goods.productName}}</text><text class="sku-name">{{goods.skuName}} × {{goods.quantity}}</text></view>
+        <view class="goods-price">¥{{goods.subtotal}}</view>
+      </view>
+    </view>
+    <view class="between footer"><view class="subtitle">{{item.createdAt}}</view><view><text class="total-label">合计 </text><text class="price">¥{{item.payableAmount}}</text></view></view>
+    <view class="actions" wx:if="{{item.orderStatus === 'PENDING_PAYMENT' || item.orderStatus === 'PAID'}}">
+      <button wx:if="{{item.orderStatus === 'PENDING_PAYMENT' || item.orderStatus === 'PAID'}}" class="ghost" size="mini" data-no="{{item.orderNo}}" bindtap="cancel">取消订单</button>
+      <button wx:if="{{item.orderStatus === 'PENDING_PAYMENT'}}" class="primary" size="mini" data-no="{{item.orderNo}}" bindtap="pay">立即支付</button>
+    </view>
+  </view>
+</view>

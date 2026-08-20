@@ -1,0 +1,15 @@
+{
+  "description": "微信小程序外卖平台",
+  "compileType": "miniprogram",
+  "libVersion": "trial",
+  "appid": "wx2a44c4c87d8f45fb",
+  "projectname": "waimai-miniprogram",
+  "miniprogramRoot": "./",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  }
+}

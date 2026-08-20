@@ -1,0 +1,52 @@
+<view class="page cart-page">
+  <view class="page-heading">
+    <view class="eyebrow">YOUR BAG</view>
+    <view class="title">购物车</view>
+  </view>
+  <view wx:if="{{!cart && !loading}}" class="empty">
+    <view class="empty-icon">⌁</view><view>登录后查看购物车</view>
+    <button class="primary empty-button" bindtap="goLogin">去登录</button>
+  </view>
+  <view wx:elif="{{cart && !cart.items.length}}" class="empty">
+    <view class="empty-icon">＋</view><view>购物车还是空的</view>
+    <button class="primary empty-button" bindtap="goOrder">去点餐</button>
+  </view>
+  <block wx:elif="{{cart}}">
+    <view class="card address between" bindtap="chooseAddress">
+      <view class="address-icon">⌖</view>
+      <view class="address-content" wx:if="{{address}}">
+        <view class="address-name">送到这里</view>
+        <view class="address-detail">{{address.province}}{{address.city}}{{address.district}}{{address.detailAddress}}</view>
+        <view class="subtitle">{{address.contactName}} · {{address.contactPhone}}</view>
+      </view>
+      <view class="address-content" wx:else><view class="address-name">添加收货地址</view><view class="subtitle">完善地址后即可下单</view></view>
+      <view class="chevron">›</view>
+    </view>
+    <view class="card order-list">
+      <view class="between list-title"><view class="section-title">{{cart.shopName}}</view><view class="item-count">{{cart.items.length}} 件商品</view></view>
+      <view wx:for="{{cart.items}}" wx:key="itemId" class="cart-item">
+        <view class="item-visual"><image wx:if="{{item.localImage}}" src="{{item.localImage}}" mode="aspectFill" /><text wx:else>{{item.initial}}</text></view>
+        <view class="item-main">
+          <view class="item-name">{{item.productName}}</view>
+          <view class="subtitle">{{item.skuName}}</view>
+          <view class="price">¥{{item.subtotal}}</view>
+        </view>
+        <view class="stepper row">
+          <button data-id="{{item.itemId}}" data-quantity="{{item.quantity - 1}}" bindtap="changeQuantity">−</button>
+          <text>{{item.quantity}}</text>
+          <button class="stepper-add" data-id="{{item.itemId}}" data-quantity="{{item.quantity + 1}}" bindtap="changeQuantity">＋</button>
+        </view>
+      </view>
+    </view>
+    <view class="card summary">
+      <view class="between summary-line"><text>商品小计</text><text>¥{{cart.totalAmount}}</text></view>
+      <view class="between summary-line"><text>配送费</text><text class="free">免配送费</text></view>
+      <view class="divider"></view>
+      <view class="between summary-total"><text>合计</text><view><text class="currency">¥</text><text>{{cart.totalAmount}}</text></view></view>
+    </view>
+    <view class="checkout glass between">
+      <view><view class="checkout-label">合计</view><view class="total">¥{{cart.totalAmount}}</view></view>
+      <button class="primary pay" loading="{{submitting}}" bindtap="checkout">确认下单</button>
+    </view>
+  </block>
+</view>

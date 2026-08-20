@@ -1,0 +1,21 @@
+.orders-page { padding-top: 34rpx; }
+.page-heading { padding: 8rpx 6rpx 30rpx; }
+.page-heading .title { margin-top: 10rpx; font-size: 50rpx; }
+.login-button { width: 260rpx; margin-top: 34rpx; }
+.order-card { padding: 30rpx; }
+.order-head { align-items: flex-start; }
+.shop { font-size: 31rpx; font-weight: 700; }
+.order-no { color: #a0a5ad; font-size: 20rpx; margin-top: 9rpx; }
+.status { padding: 9rpx 16rpx; border-radius: 999rpx; background: rgba(255,111,65,.11); color: #ee5a33; font-size: 21rpx; font-weight: 650; }
+.status-COMPLETED { background: rgba(52,199,89,.11); color: #268843; }
+.status-CANCELLED { background: rgba(118,118,128,.09); color: #777d86; }
+.goods-wrap { margin: 24rpx 0 18rpx; padding: 8rpx 20rpx; border-radius: 22rpx; background: rgba(118,118,128,.055); }
+.goods { padding: 15rpx 0; color: #555b64; }
+.goods-main { display: flex; min-width: 0; flex-direction: column; }
+.goods-name { color: #2b2e33; font-weight: 600; }
+.sku-name { margin-top: 5rpx; color: #91969e; font-size: 21rpx; }
+.goods-price { font-variant-numeric: tabular-nums; }
+.footer { padding-top: 6rpx; }
+.total-label { color: #888e97; font-size: 22rpx; }
+.actions { display: flex; justify-content: flex-end; gap: 14rpx; margin-top: 24rpx; }
+.actions button { min-width: 176rpx; margin: 0; }

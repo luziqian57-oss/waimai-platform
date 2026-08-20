@@ -1,0 +1,8 @@
+{
+  "name": "waimai-miniprogram-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node run-e2e.js"
+  }
+}

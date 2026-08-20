@@ -1,0 +1,62 @@
+<view class="home-page">
+  <view class="ambient ambient-one"></view>
+  <view class="ambient ambient-two"></view>
+  <view class="content">
+    <view class="topline between">
+      <view>
+        <view class="eyebrow">GOOD FOOD, GOOD MOOD</view>
+        <view class="greeting">今天想吃点什么？</view>
+      </view>
+      <view class="avatar">星</view>
+    </view>
+
+    <scroll-view class="shop-tabs" scroll-x enhanced show-scrollbar="{{false}}" wx:if="{{shops.length > 1}}">
+      <view wx:for="{{shops}}" wx:key="id" class="shop-tab {{shop && shop.id === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectShop">{{item.shopName}}</view>
+    </scroll-view>
+
+    <view class="hero glass" wx:if="{{shop}}">
+      <view class="hero-badge">正在营业</view>
+      <view class="hero-title">{{shop.shopName}}</view>
+      <view class="hero-address">⌖ {{shop.address}}</view>
+      <view class="hero-meta">
+        <view><text class="meta-strong">30</text> 分钟送达</view>
+        <view class="dot"></view>
+        <view>满 ¥50 免配送费</view>
+      </view>
+    </view>
+
+    <view class="menu" wx:if="{{categories.length}}">
+      <scroll-view class="categories glass" scroll-y enhanced show-scrollbar="{{false}}">
+        <view wx:for="{{categories}}" wx:key="id" class="category {{activeCategoryId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectCategory">
+          <view class="category-dot"></view>
+          <text>{{item.categoryName}}</text>
+        </view>
+      </scroll-view>
+      <scroll-view class="products" scroll-y enhanced show-scrollbar="{{false}}">
+        <block wx:for="{{categories}}" wx:key="id">
+          <block wx:if="{{activeCategoryId === item.id}}">
+            <view class="category-heading">{{item.categoryName}}<text>{{item.products.length}} 道</text></view>
+            <view wx:for="{{item.products}}" wx:key="id" wx:for-item="product" class="product-card">
+              <view class="product-visual">
+                <image wx:if="{{product.localImage}}" src="{{product.localImage}}" mode="aspectFill" />
+                <text wx:else>{{product.initial}}</text>
+              </view>
+              <view class="product-info">
+                <view class="product-name">{{product.productName}}</view>
+                <view class="description">{{product.description || '新鲜现做，品质之选'}}</view>
+                <view wx:for="{{product.skus}}" wx:key="id" wx:for-item="sku" class="sku between">
+                  <view>
+                    <view class="sku-name">{{sku.skuName}}</view>
+                    <view><text class="currency">¥</text><text class="price">{{sku.price}}</text></view>
+                  </view>
+                  <button class="add" data-sku="{{sku.id}}" bindtap="addSku" aria-label="加入购物车">＋</button>
+                </view>
+              </view>
+            </view>
+          </block>
+        </block>
+      </scroll-view>
+    </view>
+    <view class="empty" wx:if="{{!loading && !shops.length}}"><view class="empty-icon">⌁</view>暂无营业店铺</view>
+  </view>
+</view>

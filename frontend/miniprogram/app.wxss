@@ -1,0 +1,57 @@
+page {
+  min-height: 100%;
+  background: linear-gradient(180deg, #f7f8fb 0%, #eef1f6 100%);
+  color: #17191d;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+  font-size: 28rpx;
+}
+
+.page { min-height: 100vh; padding: 24rpx 28rpx 190rpx; box-sizing: border-box; }
+.card {
+  background: rgba(255, 255, 255, .92);
+  border: 1rpx solid rgba(255, 255, 255, .92);
+  border-radius: 30rpx;
+  padding: 30rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 16rpx 50rpx rgba(25, 34, 52, .07);
+}
+.glass {
+  background: rgba(255, 255, 255, .72);
+  border: 1rpx solid rgba(255, 255, 255, .86);
+  box-shadow: 0 18rpx 56rpx rgba(31, 38, 52, .12);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+.eyebrow { color: #ff6a3d; font-size: 22rpx; font-weight: 600; letter-spacing: 2rpx; }
+.title { font-size: 40rpx; line-height: 1.2; font-weight: 700; letter-spacing: -1rpx; }
+.section-title { font-size: 31rpx; font-weight: 650; }
+.subtitle { color: #7b818b; font-size: 24rpx; line-height: 1.55; margin-top: 8rpx; }
+.price { color: #f0552d; font-weight: 700; font-variant-numeric: tabular-nums; }
+.primary, .secondary, .danger, .ghost {
+  min-height: 84rpx;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 84rpx;
+}
+.primary { background: linear-gradient(135deg, #ff784c, #f2522e); color: #fff; box-shadow: 0 12rpx 28rpx rgba(242, 82, 46, .24); }
+.secondary { background: rgba(255, 111, 65, .11); color: #e9572f; }
+.danger { background: rgba(255, 59, 48, .09); color: #d9342b; }
+.ghost { background: rgba(118, 118, 128, .08); color: #30343a; }
+.empty { text-align: center; color: #8c929c; padding: 150rpx 30rpx 80rpx; }
+.empty-icon { width: 112rpx; height: 112rpx; line-height: 112rpx; margin: 0 auto 24rpx; border-radius: 36rpx; background: rgba(255,255,255,.8); font-size: 48rpx; box-shadow: 0 12rpx 40rpx rgba(27,36,52,.08); }
+.row { display: flex; align-items: center; }
+.between { display: flex; align-items: center; justify-content: space-between; }
+.input {
+  height: 94rpx;
+  box-sizing: border-box;
+  background: rgba(118, 118, 128, .08);
+  border: 1rpx solid rgba(60, 60, 67, .06);
+  border-radius: 22rpx;
+  padding: 0 26rpx;
+  margin-top: 18rpx;
+  font-size: 28rpx;
+}
+.chevron { color: #b5bac2; font-size: 36rpx; font-weight: 300; }
+button::after { border: none; }
+button[disabled] { opacity: .46; }

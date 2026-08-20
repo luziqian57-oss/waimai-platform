@@ -1,0 +1,23 @@
+<view class="login-page">
+  <view class="orb orb-one"></view><view class="orb orb-two"></view>
+  <view class="login-content">
+    <view class="hero">
+      <view class="logo glass">星</view>
+      <view class="brand">星河外卖</view>
+      <view class="slogan">新鲜现做，准时抵达</view>
+    </view>
+    <view class="panel glass">
+      <view class="eyebrow">{{mode === 'login' ? 'WELCOME BACK' : 'JOIN US'}}</view>
+      <view class="title">{{mode === 'login' ? '欢迎回来' : '创建账号'}}</view>
+      <view class="form">
+        <view class="field"><view class="field-label">用户名</view><input placeholder="4–50 位字符" value="{{username}}" data-field="username" bindinput="onInput" /></view>
+        <view class="field" wx:if="{{mode === 'register'}}"><view class="field-label">昵称</view><input placeholder="怎么称呼你" value="{{nickname}}" data-field="nickname" bindinput="onInput" /></view>
+        <view class="field"><view class="field-label">密码</view><input password placeholder="至少 8 位" value="{{password}}" data-field="password" bindinput="onInput" confirm-type="done" bindconfirm="submit" /></view>
+      </view>
+      <button class="primary submit" loading="{{loading}}" bindtap="submit">{{mode === 'login' ? '登录' : '注册并登录'}}</button>
+      <view class="separator"><view></view><text>或</text><view></view></view>
+      <button class="wechat" bindtap="wechatLogin"><text class="wechat-icon">●</text> 微信一键登录</button>
+      <view class="switch" bindtap="switchMode">{{mode === 'login' ? '没有账号？立即注册' : '已有账号？返回登录'}}</view>
+    </view>
+  </view>
+</view>

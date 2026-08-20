@@ -1,0 +1,26 @@
+<view class="page addresses-page">
+  <view class="page-heading between"><view><view class="eyebrow">DELIVERY</view><view class="title">收货地址</view></view><button class="add-button" bindtap="addAddress">＋</button></view>
+  <view wx:if="{{!loading && !addresses.length}}" class="empty"><view class="empty-icon">⌖</view><view>还没有收货地址</view><button class="primary empty-button" bindtap="addAddress">添加第一个地址</button></view>
+  <view wx:for="{{addresses}}" wx:key="id" class="card address-card">
+    <view class="between address-top"><view class="address-title">{{item.contactName}} <text>{{item.contactPhone}}</text></view><view wx:if="{{item.isDefault}}" class="default-badge">默认</view></view>
+    <view class="address-detail">{{item.province}}{{item.city}}{{item.district}}{{item.detailAddress}}</view>
+    <view class="address-actions between">
+      <view wx:if="{{!item.isDefault}}" class="set-default" data-id="{{item.id}}" bindtap="setDefault"><view class="radio"></view>设为默认</view>
+      <view wx:else class="set-default selected"><view class="radio">✓</view>默认地址</view>
+      <view class="row action-buttons"><button class="ghost" data-id="{{item.id}}" bindtap="editAddress">编辑</button><button class="delete" data-id="{{item.id}}" bindtap="remove">删除</button></view>
+    </view>
+  </view>
+
+  <view wx:if="{{showForm}}" class="sheet-mask" bindtap="closeForm">
+    <view class="sheet glass" catchtap="stopPropagation">
+      <view class="sheet-handle"></view>
+      <view class="between sheet-head"><view><view class="eyebrow">ADDRESS</view><view class="section-title">{{form.id ? '编辑地址' : '新增地址'}}</view></view><button class="close" bindtap="closeForm">×</button></view>
+      <view class="field"><view class="label">联系人</view><input placeholder="姓名" value="{{form.contactName}}" data-field="contactName" bindinput="onInput" /></view>
+      <view class="field"><view class="label">手机号码</view><input type="number" maxlength="11" placeholder="11 位手机号" value="{{form.contactPhone}}" data-field="contactPhone" bindinput="onInput" /></view>
+      <picker mode="region" value="{{form.region}}" bindchange="onRegionChange"><view class="field"><view class="label">省 / 市 / 区</view><view class="picker-value">{{form.region[0]}} {{form.region[1]}} {{form.region[2]}} <text>›</text></view></view></picker>
+      <view class="field"><view class="label">详细地址</view><input placeholder="街道、门牌号、楼层房间号" value="{{form.detailAddress}}" data-field="detailAddress" bindinput="onInput" /></view>
+      <view class="default-switch between"><view><view>设为默认地址</view><view class="subtitle">下单时优先使用</view></view><switch checked="{{form.isDefault}}" color="#ff6840" bindchange="onDefaultChange" /></view>
+      <button class="primary save" loading="{{submitting}}" bindtap="save">保存地址</button>
+    </view>
+  </view>
+</view>

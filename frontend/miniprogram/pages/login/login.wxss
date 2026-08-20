@@ -1,0 +1,21 @@
+.login-page { min-height: 100vh; position: relative; overflow: hidden; background: linear-gradient(160deg,#fff8f4 0%,#f0f3f8 56%,#e9edf5 100%); }
+.login-content { position: relative; z-index: 2; padding: 80rpx 34rpx 50rpx; }
+.orb { position: absolute; border-radius: 50%; filter: blur(8rpx); }
+.orb-one { width: 520rpx; height: 520rpx; right: -190rpx; top: -220rpx; background: radial-gradient(circle,#ffb18e 0%,rgba(255,177,142,0) 70%); }
+.orb-two { width: 500rpx; height: 500rpx; left: -260rpx; bottom: -140rpx; background: radial-gradient(circle,#afc9ff 0%,rgba(175,201,255,0) 72%); }
+.hero { padding: 38rpx 12rpx 58rpx; }
+.logo { width: 88rpx; height: 88rpx; line-height: 88rpx; border-radius: 29rpx; text-align: center; color: #ee5b34; font-size: 40rpx; font-weight: 750; }
+.brand { margin-top: 28rpx; font-size: 55rpx; font-weight: 780; letter-spacing: -2rpx; }
+.slogan { color: #777d87; margin-top: 12rpx; }
+.panel { border-radius: 38rpx; padding: 42rpx 34rpx 38rpx; }
+.panel .title { margin-top: 10rpx; }
+.form { margin-top: 30rpx; }
+.field { padding: 18rpx 24rpx; margin-top: 16rpx; border-radius: 22rpx; background: rgba(255,255,255,.72); border: 1rpx solid rgba(60,60,67,.07); }
+.field-label { color: #717780; font-size: 20rpx; font-weight: 600; }
+.field input { height: 50rpx; margin-top: 4rpx; font-size: 28rpx; }
+.submit { margin-top: 28rpx; }
+.separator { display: flex; align-items: center; gap: 20rpx; margin: 28rpx 0; color: #a1a6ae; font-size: 22rpx; }
+.separator view { flex: 1; height: 1rpx; background: rgba(60,60,67,.11); }
+.wechat { background: rgba(255,255,255,.68); color: #23262b; border: 1rpx solid rgba(60,60,67,.08); border-radius: 999rpx; font-size: 28rpx; font-weight: 600; }
+.wechat-icon { color: #16a951; margin-right: 8rpx; }
+.switch { color: #e75a34; text-align: center; margin-top: 30rpx; font-size: 25rpx; }

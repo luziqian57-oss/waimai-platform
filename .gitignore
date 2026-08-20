@@ -9,3 +9,6 @@ target/
 output/
 postman/collections/
 postman/globals/
+frontend/e2e/node_modules/
+frontend/e2e/output/
+frontend/preview/
