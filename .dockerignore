@@ -1,0 +1,8 @@
+target
+.git
+.idea
+.postman
+output
+*.iml
+*.log
+.env

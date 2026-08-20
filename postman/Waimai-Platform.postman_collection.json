@@ -1,0 +1,178 @@
+{
+  "info": {
+    "_postman_id": "5b15caad-e0cd-4f8b-9ed6-5e98ef5f8f5c",
+    "name": "外卖平台完整闭环测试",
+    "description": "健康检查、演示菜单、注册、地址、购物车、下单、JWT、支付和取消订单。公网部署后只需修改 baseUrl。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8081"},
+    {"key": "accessToken", "value": ""},
+    {"key": "testUsername", "value": ""},
+    {"key": "shopId", "value": ""},
+    {"key": "skuId", "value": ""},
+    {"key": "addressId", "value": ""},
+    {"key": "cartItemId", "value": ""},
+    {"key": "orderNo", "value": ""}
+  ],
+  "item": [
+    {
+      "name": "01 健康检查",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/health"},
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('服务、MySQL、Redis 正常', () => {",
+        "  pm.response.to.have.status(200);",
+        "  const body = pm.response.json();",
+        "  pm.expect(body.application).to.eql('UP');",
+        "  pm.expect(body.mysql).to.eql('UP');",
+        "  pm.expect(body.redis).to.eql('PONG');",
+        "});"
+      ]}}]
+    },
+    {
+      "name": "02 查询店铺",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/shops"},
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('存在演示店铺', () => pm.response.to.have.status(200));",
+        "const body = pm.response.json();",
+        "pm.expect(body.length).to.be.above(0);",
+        "pm.collectionVariables.set('shopId', body[0].id);"
+      ]}}]
+    },
+    {
+      "name": "03 查询菜单",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/shops/{{shopId}}/menu"},
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('菜单包含可售 SKU', () => pm.response.to.have.status(200));",
+        "const body = pm.response.json();",
+        "const sku = body.categories.flatMap(c => c.products).flatMap(p => p.skus)[0];",
+        "pm.expect(sku).to.exist;",
+        "pm.collectionVariables.set('skuId', sku.id);"
+      ]}}]
+    },
+    {
+      "name": "04 注册闭环用户",
+      "event": [
+        {"listen": "prerequest", "script": {"exec": [
+          "pm.collectionVariables.set('testUsername', 'postman_' + Date.now());"
+        ]}},
+        {"listen": "test", "script": {"exec": [
+          "pm.test('注册并返回 JWT', () => pm.response.to.have.status(201));",
+          "const body = pm.response.json();",
+          "pm.expect(body.accessToken).to.be.a('string').and.not.empty;",
+          "pm.collectionVariables.set('accessToken', body.accessToken);"
+        ]}}
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"username\": \"{{testUsername}}\",\n  \"password\": \"PostmanPass2026!\",\n  \"nickname\": \"Postman闭环用户\",\n  \"phone\": \"\"\n}"},
+        "url": "{{baseUrl}}/api/auth/register"
+      }
+    },
+    {
+      "name": "05 JWT 查询当前用户",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "GET", "url": "{{baseUrl}}/api/users/me"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('JWT 鉴权成功', () => pm.response.to.have.status(200));",
+        "pm.expect(pm.response.json().username).to.eql(pm.collectionVariables.get('testUsername'));"
+      ]}}]
+    },
+    {
+      "name": "06 新增默认地址",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"contactName\": \"张三\",\n  \"contactPhone\": \"13800138000\",\n  \"province\": \"上海市\",\n  \"city\": \"上海市\",\n  \"district\": \"浦东新区\",\n  \"detailAddress\": \"演示路100号101室\",\n  \"isDefault\": true\n}"},
+        "url": "{{baseUrl}}/api/addresses"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('地址创建成功', () => pm.response.to.have.status(201));",
+        "pm.collectionVariables.set('addressId', pm.response.json().id);"
+      ]}}]
+    },
+    {
+      "name": "07 加入购物车",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"shopId\": {{shopId}},\n  \"skuId\": {{skuId}},\n  \"quantity\": 2\n}"},
+        "url": "{{baseUrl}}/api/cart/items"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('购物车数量为2', () => pm.response.to.have.status(201));",
+        "const item = pm.response.json().items[0];",
+        "pm.expect(item.quantity).to.eql(2);",
+        "pm.collectionVariables.set('cartItemId', item.itemId);"
+      ]}}]
+    },
+    {
+      "name": "08 修改购物车数量",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "PUT",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"quantity\": 3\n}"},
+        "url": "{{baseUrl}}/api/cart/items/{{cartItemId}}"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('数量修改为3', () => pm.response.to.have.status(200));",
+        "pm.expect(pm.response.json().items[0].quantity).to.eql(3);"
+      ]}}]
+    },
+    {
+      "name": "09 创建订单",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"shopId\": {{shopId}},\n  \"addressId\": {{addressId}},\n  \"remark\": \"少盐\"\n}"},
+        "url": "{{baseUrl}}/api/orders"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('订单创建并等待支付', () => pm.response.to.have.status(201));",
+        "const body = pm.response.json();",
+        "pm.expect(body.orderStatus).to.eql('PENDING_PAYMENT');",
+        "pm.collectionVariables.set('orderNo', body.orderNo);"
+      ]}}]
+    },
+    {
+      "name": "10 模拟支付",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "POST", "url": "{{baseUrl}}/api/orders/{{orderNo}}/pay"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('支付状态为PAID', () => pm.response.to.have.status(200));",
+        "pm.expect(pm.response.json().orderStatus).to.eql('PAID');"
+      ]}}]
+    },
+    {
+      "name": "11 查询订单列表",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "GET", "url": "{{baseUrl}}/api/orders?page=1&size=10"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('分页列表包含订单', () => pm.response.to.have.status(200));",
+        "pm.expect(pm.response.json().total).to.be.above(0);"
+      ]}}]
+    },
+    {
+      "name": "12 取消订单并恢复库存",
+      "request": {
+        "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+        "method": "POST", "url": "{{baseUrl}}/api/orders/{{orderNo}}/cancel"
+      },
+      "event": [{"listen": "test", "script": {"exec": [
+        "pm.test('订单取消成功', () => pm.response.to.have.status(200));",
+        "pm.expect(pm.response.json().orderStatus).to.eql('CANCELLED');"
+      ]}}]
+    }
+  ]
+}
