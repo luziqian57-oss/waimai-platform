@@ -15,7 +15,9 @@
 2. 选择“导入项目”。
 3. 项目目录选择本目录下的 `miniprogram`。
 4. 本地体验可以使用测试号；发布前把 `project.config.json` 的 `appid` 换成真实小程序 AppID。
-5. 开发版访问 `http://localhost:8081`；体验版和正式版访问 `https://api-production-0977b.up.railway.app`。
+5. 默认访问 `https://api-production-0977b.up.railway.app`，所以开发版预览、体验版和正式版都能在手机上联网。
 6. 正式发布前，在微信公众平台把后端域名加入 `request` 合法域名。
 
 生产 API 已部署到 Railway。微信公众平台仍需把 `https://api-production-0977b.up.railway.app` 加入 `request` 合法域名。
+
+如需连接本机后端，把 `miniprogram/config.js` 中的 `USE_LOCAL_API` 临时改为 `true`，调试完成后改回 `false`。
