@@ -22,6 +22,11 @@ public class HealthController {
         this.redisTemplate = redisTemplate;
     }
 
+    @GetMapping("/live")
+    public Map<String, String> live() {
+        return Map.of("application", "UP");
+    }
+
     @GetMapping("/health")
     public Map<String, String> health() {
         Map<String, String> status = new LinkedHashMap<>();
