@@ -10,5 +10,5 @@ WORKDIR /app
 RUN useradd --system --uid 10001 appuser
 COPY --from=build /workspace/target/waimai-platform-0.0.1-SNAPSHOT.jar app.jar
 USER appuser
-EXPOSE 8081
+EXPOSE 8080
 ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/app.jar"]
