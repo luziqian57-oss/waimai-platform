@@ -80,6 +80,10 @@ ADMIN_BOOTSTRAP_PASSWORD=<至少12位随机密码>
 
 ## 发布到 GitHub 和公网
 
+公开仓库：`https://github.com/luziqian57-oss/waimai-platform`
+
+生产 API：`https://api-production-0977b.up.railway.app`
+
 1. 在 GitHub 创建空仓库，把本项目推送到 `main`。
 2. GitHub Actions 会使用 Java 21 运行测试并将 Docker 镜像发布到 GHCR。
 3. 在 Railway 创建项目并连接该 GitHub 仓库。

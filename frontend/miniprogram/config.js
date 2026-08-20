@@ -1,8 +1,7 @@
 const DEV_API_BASE_URL = 'http://localhost:8081'
-const PROD_API_BASE_URL = 'https://replace-with-your-api-domain.example.com'
+const PROD_API_BASE_URL = 'https://api-production-0977b.up.railway.app'
 
 function resolveApiBaseUrl() {
-  if (PROD_API_BASE_URL.includes('replace-with-your-api-domain')) return DEV_API_BASE_URL
   try {
     const account = wx.getAccountInfoSync()
     const envVersion = account && account.miniProgram && account.miniProgram.envVersion
