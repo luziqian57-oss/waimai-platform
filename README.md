@@ -24,7 +24,7 @@ export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
 ./mvnw spring-boot:run
 ```
 
-环境检查接口：`GET http://localhost:8080/api/health`
+环境检查接口：`GET http://localhost:8081/api/health`
 
 默认连接本机的 `waimai_platform` 数据库（root 空密码）和 Redis 0 号库。可通过
 `DB_URL`、`DB_USERNAME`、`DB_PASSWORD`、`REDIS_HOST`、`REDIS_PORT`、
